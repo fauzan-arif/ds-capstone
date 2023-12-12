@@ -12,4 +12,3 @@ jupyterlab_ariakedark_theme
 jupyterthemes
 requests
 bs4
-urllib.parse
