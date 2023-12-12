@@ -7,4 +7,5 @@ telethon
 yfinance
 jupyterlab
 jupyterlab-simpledark
-jupyterthemes
+requests
+bs4
