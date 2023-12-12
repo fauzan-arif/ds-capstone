@@ -1,5 +1,10 @@
 # DS Capstone Project without a name
 
+Please create your own branch:
+```
+git checkout -b <name>
+````
+
 ## Setup
 
 Use the requirements file in this repo to create a new environment.
