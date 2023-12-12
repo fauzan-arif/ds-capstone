@@ -19,7 +19,7 @@ setup: clear_screen python venv pip requirements print_activation_message
 python:	
 	@echo "–– Installing Python –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––"
 	@if [ -z "$(PYENV_VERSION_INSTALLED)" ]; then \
-		echo "Installing Python $(PYTHON_VERSION) with pyenv..."; \
+		@echo "Installing Python $(PYTHON_VERSION) with pyenv..."; \
 		pyenv install $(PYTHON_VERSION); \
 	fi
 	pyenv local $(PYTHON_VERSION)
