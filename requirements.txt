@@ -1,14 +1,11 @@
 python-dotenv
-myst_nb
 pandas
 numpy
 pymongo
+streamlit
 telethon
 yfinance
 jupyterlab
 jupyterlab-simpledark
-jupyterlab-fonts
-jupyterlab_ariakedark_theme
-jupyterthemes
 requests
 bs4
