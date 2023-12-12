@@ -1,5 +1,12 @@
-matplotlib==3.7.1
-numpy==1.24.3
-pandas==2.0.1
-scikit-learn==1.2.2
-statsmodels==0.14.0
+python-dotenv
+myst_nb
+pandas
+numpy
+pymongo
+telethon
+yfinance
+jupyterlab
+jupyterlab-simpledark
+jupyterlab-fonts
+jupyterlab_ariakedark_theme
+jupyterthemes
