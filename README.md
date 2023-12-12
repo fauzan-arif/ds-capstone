@@ -7,7 +7,7 @@ git checkout -b <name>
 
 ## Setup
 
-Use the requirements file in this repo to create a new environment.
+Just run make to setup everything:
 
 ```BASH
 make
