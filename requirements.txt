@@ -10,3 +10,5 @@ jupyterlab
 jupyterlab-simpledark
 requests
 bs4
+nltk
+scikit-learn
