@@ -2,6 +2,7 @@ python-dotenv
 pandas
 numpy
 pymongo
+pymongo[srv]
 streamlit
 telethon
 yfinance
@@ -14,3 +15,5 @@ alpha_vantage
 iexfinance
 statsmodels==0.14.0
 scikit-learn==1.2.2
+nltk
+
