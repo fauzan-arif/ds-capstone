@@ -21,7 +21,8 @@ tensorflow-docs
 statsmodels==0.13.5
 scikit-learn==1.2.2
 matplotlib==3.7.1
-pandas==2.0.1
-numpy==1.23.5
 seaborn==0.12.2
 flask
+torch
+transformers
+ipywidgets
