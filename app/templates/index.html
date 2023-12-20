@@ -18,13 +18,15 @@
       <li><a href="/" class="home">⌂</a></li>
     </ul>
   </header>
-  
-  <h1>S&amp;P 500 Companies</h1>
-  <ul class="ticker-list">
-  {% for ticker in tickers %}
-     <li><a href="{{ url_for('ticker', symbol=ticker) }}" class="symbol">{{ ticker }}</a></li>
-  {% endfor %}
-  </ul>
+
+  <main>
+    <h1>S&amp;P 500 Companies</h1>
+    <ul class="ticker-list">
+      {% for ticker in tickers %}
+       <li><a href="{{ url_for('ticker', symbol=ticker) }}" class="symbol">{{ ticker }}</a></li>
+       {% endfor %}
+     </ul>
+  </main>
 
 </body>
 </html>

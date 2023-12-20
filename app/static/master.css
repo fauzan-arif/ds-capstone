@@ -14,14 +14,14 @@ body {
 header.master {
   background: #000;
   color: #fff;
-  padding: 1rem;
+  padding: 1rem 3rem;
 }
 
 main {
   display: grid;
   grid-template-columns: 3fr 4fr;
-  gap: 1rem;
-  padding: 1rem;
+  gap: 3rem;
+  padding: 3rem;
 }
 
 
@@ -56,9 +56,7 @@ h1 .symbol {
   font-family: monospace;
 }
 
-.ticker {
 
-}
 
 .ticker .company-logo {
   width: 140px;
@@ -71,16 +69,11 @@ h1 .symbol {
   display: block;
 }
 
-.ticker header {
-
-} 
-
 .ticker .description {
   font-size: 0.8rem;
   line-height: 1.3;
   text-align: justify;
   hyphens: auto;
-  padding: 1rem;
 }
 
 .ticker-list {
@@ -94,4 +87,35 @@ h1 .symbol {
 
 .company-link {
   font-size:0.75em;
+}
+
+
+.ticker header {
+  display: grid; 
+  grid-auto-columns: 1fr; 
+  grid-template-columns: 150px 1fr; 
+  grid-template-rows: 0.5fr 0.25fr 0.25fr; 
+  gap: 0px 10px; 
+  grid-template-areas: 
+    "logo company"
+    "logo info"
+    "logo more"; 
+}
+.ticker .company-logo { grid-area: logo;}
+.ticker .company-name { grid-area: company;}
+.ticker .company-info { grid-area: info;}
+.ticker .company-link { grid-area: more;}
+
+.news-list li {
+  display: flex;
+  flex: 150px 1;
+  flex-direction: row-reverse;
+  gap: 1rem;
+}
+.news-list li h3 {
+  flex: auto;
+  line-height:1.5;
+}
+.news-list li img {
+  width: 80px;
 }
