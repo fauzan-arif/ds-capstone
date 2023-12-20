@@ -19,30 +19,30 @@
     </ul>
   </header>
   
-  <article class="ticker">
-    <header>
-      
-      <div class="company-logo"><img src="https://logo.clearbit.com/{{ domain }}?size=140"></div>
-      <h1 class="company-name">{{ info['longName'] }} <span class="symbol">{{ info['symbol'] }}</span></h1>
-      <p class="company-info">{{ info['industry'] }}</p>
-      <p class="company-link"><a href="{{ info['website'] }}">{{ info['website'] }}</a></p>
-    </header>
-
-    <p class="description">{{ info['longBusinessSummary'] }}</p>
-
-  </article>
-  
   <main>
-    <ul class="news-list">
-    {% for news in ticker.news %}
-      <li>
-        <h3><a href="{{ news.link }}">{{ news.title }}</a></h3>
-        {% if news.thumbnail and news.thumbnail.resolutions[1] %}
-        <p><img src="{{ news.thumbnail.resolutions[1].url }}"></p>
-         {% endif %}
-      </li>
-    {% endfor %}
-    </ul>
+    <article class="ticker">
+      <header>
+        <div class="company-logo"><img src="https://logo.clearbit.com/{{ domain }}?size=140"></div>
+        <h1 class="company-name">{{ info['longName'] }} <span class="symbol">{{ info['symbol'] }}</span></h1>
+        <p class="company-info">{{ info['industry'] }}</p>
+        <p class="company-link"><a href="{{ info['website'] }}">{{ info['website'] }}</a></p>
+      </header>
+
+      <p class="description">{{ info['longBusinessSummary'] }}</p>
+    </article>
+  
+    <section id="news">
+      <ul class="news-list">
+      {% for news in ticker.news %}
+        <li>
+          <h3><a href="{{ news.link }}">{{ news.title }}</a></h3>
+          {% if news.thumbnail and news.thumbnail.resolutions[1] %}
+          <p><img src="{{ news.thumbnail.resolutions[1].url }}"></p>
+           {% endif %}
+        </li>
+      {% endfor %}
+      </ul>
+    </section>
   </main>
   
   
@@ -79,18 +79,7 @@
       }
       
       
-      article {float:left; width: 1fr;}
     </style>
-      
-      
-    
-    
-      
-      
-      
-<!--pre wrap>{{ info.keys() }}</pre-->
-  
 
-  
 </body>
 </html>

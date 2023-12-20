@@ -17,6 +17,14 @@ header.master {
   padding: 1rem;
 }
 
+main {
+  display: grid;
+  grid-template-columns: 3fr 4fr;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+
 .breadcrumb {
   list-style: none;
 }
@@ -49,7 +57,7 @@ h1 .symbol {
 }
 
 .ticker {
-  max-width: 400px;
+
 }
 
 .ticker .company-logo {
