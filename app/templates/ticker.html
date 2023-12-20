@@ -38,7 +38,9 @@
           <h3><a href="{{ news.link }}">{{ news.title }}</a></h3>
           {% if news.thumbnail and news.thumbnail.resolutions[1] %}
           <p><img src="{{ news.thumbnail.resolutions[1].url }}"></p>
-           {% endif %}
+          {% else %}
+          <p><img src="https://logo.clearbit.com/{{ domain }}?size=140"></p>
+          {% endif %}
         </li>
       {% endfor %}
       </ul>
