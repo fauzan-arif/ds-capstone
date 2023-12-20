@@ -1,0 +1,29 @@
+<div class="container">
+  <header class="header">header</header>
+
+    <div class="info">info</div>
+    <div class="news">news</div>
+
+  <footer class="footer">footer</footer>
+</div>
+
+<style>
+  body {
+    margin: 0; padding: 0;
+  }
+.container {
+  height: 100vh;
+  display: grid; 
+  grid-template-columns: 1fr 1fr; 
+
+  gap: 0px 0px; 
+  grid-template-areas: 
+    "header header"
+    "info news"
+    "footer footer"; 
+}
+.header { grid-area: header; background:yellow; height: auto; }
+.info { grid-area: info;  background:green; }
+.news { grid-area: news;  background:green; }
+.footer { grid-area: footer; background:blue; }
+</style>

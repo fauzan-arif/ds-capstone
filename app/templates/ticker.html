@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="icon" sizes="32x32" href="https://www.google.com/s2/favicons?domain={{ domain }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='normalize.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='master.css') }}">
+
+  <title>{{ info['symbol'] }}: {{ info['shortName'] }}</title>
+</head>
+<body>
+  
+  <header class="master"> 
+    <ul class="breadcrumb">
+      <li><a href="/" class="home">⌂</a></li>
+      <li class="symbol">{{ info['symbol'] }}</li>
+    </ul>
+  </header>
+  
+  <article class="ticker">
+    <header>
+      
+      <div class="company-logo"><img src="https://logo.clearbit.com/{{ domain }}?size=140"></div>
+      <h1 class="company-name">{{ info['longName'] }} <span class="symbol">{{ info['symbol'] }}</span></h1>
+      <p class="company-info">{{ info['industry'] }}</p>
+      <p class="company-link"><a href="{{ info['website'] }}">{{ info['website'] }}</a></p>
+    </header>
+
+    <p class="description">{{ info['longBusinessSummary'] }}</p>
+
+  </article>
+  
+  <main>
+    <ul class="news-list">
+    {% for news in ticker.news %}
+      <li>
+        <h3><a href="{{ news.link }}">{{ news.title }}</a></h3>
+        {% if news.thumbnail and news.thumbnail.resolutions[1] %}
+        <p><img src="{{ news.thumbnail.resolutions[1].url }}"></p>
+         {% endif %}
+      </li>
+    {% endfor %}
+    </ul>
+  </main>
+  
+  
+    
+    <style>
+      .ticker header {
+        display: grid; 
+        grid-auto-columns: 1fr; 
+        grid-template-columns: 150px 1fr; 
+        grid-template-rows: 0.5fr 0.25fr 0.25fr; 
+        gap: 0px 10px; 
+        grid-template-areas: 
+          "logo company"
+          "logo info"
+          "logo more"; 
+      }
+      .ticker .company-logo { grid-area: logo;}
+      .ticker .company-name { grid-area: company;}
+      .ticker .company-info { grid-area: info;}
+      .ticker .company-link { grid-area: more;}
+
+      .news-list li {
+        display: flex;
+        flex: 150px 1;
+        flex-direction: row-reverse;
+        gap: 10px;
+      }
+      .news-list li h3 {
+        flex: auto;
+        line-height:1.5;
+      }
+      .news-list li img {
+        width: 80px;
+      }
+      
+      
+      article {float:left; width: 1fr;}
+    </style>
+      
+      
+    
+    
+      
+      
+      
+<!--pre wrap>{{ info.keys() }}</pre-->
+  
+
+  
+</body>
+</html>

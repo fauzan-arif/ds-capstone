@@ -1,0 +1,89 @@
+body, h1,
+.breadcrumb,
+.ticker-list,
+.news-list {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui;
+
+}
+
+header.master {
+  background: #000;
+  color: #fff;
+  padding: 1rem;
+}
+
+.breadcrumb {
+  list-style: none;
+}
+
+.breadcrumb .home {
+  font-size:1.2em;
+}
+.breadcrumb li {
+  display: inline-block;
+}
+.breadcrumb li:not(:last-child)::after {
+  content: ' » ';
+  color: #999;
+}
+.breadcrumb a {
+  color: #fff;
+  display: inline-block;
+  text-decoration:none;
+}
+
+
+
+h1 .symbol {
+  color: #999;
+  font-size: 0.75em;
+}
+
+.symbol {
+  font-family: monospace;
+}
+
+.ticker {
+  max-width: 400px;
+}
+
+.ticker .company-logo {
+  width: 140px;
+  height: 140px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.ticker .company-logo img {
+  display: block;
+}
+
+.ticker header {
+
+} 
+
+.ticker .description {
+  font-size: 0.8rem;
+  line-height: 1.3;
+  text-align: justify;
+  hyphens: auto;
+  padding: 1rem;
+}
+
+.ticker-list {
+  list-style: none;
+}
+.ticker-list li {
+  display: inline-block;
+  margin: 0.2rem;
+}
+
+
+.company-link {
+  font-size:0.75em;
+}
