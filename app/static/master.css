@@ -39,9 +39,6 @@ main {
   content: "→";
 }
 
-=======
->>>>>>> main
-
 .breadcrumb {
   list-style: none;
 }
@@ -105,8 +102,6 @@ h1 .symbol {
 .company-link {
   font-size:0.75em;
 }
-<<<<<<< HEAD
-=======
 
 
 .ticker header {
@@ -138,4 +133,4 @@ h1 .symbol {
 .news-list li img {
   width: 80px;
 }
->>>>>>> main
+

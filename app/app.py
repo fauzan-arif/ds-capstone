@@ -22,10 +22,6 @@ def ticker(symbol):
     ticker_news = news_with_sentiment(ticker.news)
     
     return render_template('ticker.html', ticker=ticker, info=ticker.info, domain=domain, ticker_news=ticker_news)
-    
-
-
-
 
 
 def news_with_sentiment(news):
@@ -34,4 +30,3 @@ def news_with_sentiment(news):
         news[i]['sentiment'] = nlp.sentiment_for(article['title'])
 
     return news
-    
