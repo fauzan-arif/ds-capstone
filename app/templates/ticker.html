@@ -19,6 +19,7 @@
     </ul>
   </header>
   
+<<<<<<< HEAD
   <article class="ticker">
     <header>
       
@@ -32,15 +33,22 @@
 
   </article>
 
+=======
+>>>>>>> main
   <main>
     <article class="ticker">
       <header>
         <div class="company-logo"><img src="https://logo.clearbit.com/{{ domain }}?size=140"></div>
+<<<<<<< HEAD
         <h1 class="company-name">{{ info['longName'] }} <span class="symbol">{{ info['symbol'] }}@{{ info['exchange'] }}</span></h1>
+=======
+        <h1 class="company-name">{{ info['longName'] }} <span class="symbol">{{ info['symbol'] }}</span></h1>
+>>>>>>> main
         <p class="company-info">{{ info['industry'] }}</p>
         <p class="company-link"><a href="{{ info['website'] }}">{{ info['website'] }}</a></p>
       </header>
 
+<<<<<<< HEAD
       <p>
         Current price: {{ info['currentPrice'] | currencyformat(info['currency']) }}
         <br>Previous close: {{ info['previousClose'] | currencyformat(info['currency']) }}
@@ -52,11 +60,14 @@
       </p>
       <p>{{ info['numberOfAnalystOpinions'] }} Analysts recommend: {{ info['recommendationKey'] }}</p>
       <i class="icon arrow-right"></i>
+=======
+>>>>>>> main
       <p class="description">{{ info['longBusinessSummary'] }}</p>
     </article>
   
     <section id="news">
       <ul class="news-list">
+<<<<<<< HEAD
       {% for news in ticker_news %}
         <li>
           <h3>
@@ -66,6 +77,11 @@
             
           </h3>
           
+=======
+      {% for news in ticker.news %}
+        <li>
+          <h3><a href="{{ news.link }}">{{ news.title }}</a></h3>
+>>>>>>> main
           {% if news.thumbnail and news.thumbnail.resolutions[1] %}
           <p><img src="{{ news.thumbnail.resolutions[1].url }}"></p>
           {% else %}
@@ -75,28 +91,13 @@
       {% endfor %}
       </ul>
     </section>
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
   </main>
-  
-  
-    
-    <style>
-      .ticker header {
-        display: grid; 
-        grid-auto-columns: 1fr; 
-        grid-template-columns: 150px 1fr; 
-        grid-template-rows: 0.5fr 0.25fr 0.25fr; 
-        gap: 0px 10px; 
-        grid-template-areas: 
-          "logo company"
-          "logo info"
-          "logo more"; 
-      }
-      .ticker .company-logo { grid-area: logo;}
-      .ticker .company-name { grid-area: company;}
-      .ticker .company-info { grid-area: info;}
-      .ticker .company-link { grid-area: more;}
 
+<<<<<<< HEAD
       .news-list li {
         display: flex;
         flex: 150px 1;
@@ -126,5 +127,7 @@
 
 {{ info.keys() }}
 
+=======
+>>>>>>> main
 </body>
 </html>
