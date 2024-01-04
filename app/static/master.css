@@ -12,7 +12,7 @@ body {
 }
 
 header.master {
-  background: #000;
+  background: #369;
   color: #fff;
   padding: 1rem 3rem;
 }
@@ -24,6 +24,23 @@ main {
   padding: 3rem;
 }
 
+<<<<<<< HEAD
+.icon {
+  background-color: #369;
+  color: #fff;
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1;
+  border-radius: 100%;
+  display:inline-block;
+  padding: 0.1em;
+}
+.icon.arrow-right::before {
+  content: "→";
+}
+
+=======
+>>>>>>> main
 
 .breadcrumb {
   list-style: none;
@@ -88,6 +105,8 @@ h1 .symbol {
 .company-link {
   font-size:0.75em;
 }
+<<<<<<< HEAD
+=======
 
 
 .ticker header {
@@ -119,3 +138,4 @@ h1 .symbol {
 .news-list li img {
   width: 80px;
 }
+>>>>>>> main

@@ -7,7 +7,7 @@
   <link rel="icon" sizes="32x32" href="https://www.google.com/s2/favicons?domain={{ domain }}" />
   <link rel="stylesheet" href="{{ url_for('static', filename='normalize.min.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='master.css') }}">
-
+  <meta name="theme-color" content="#336699">
   <title>{{ info['symbol'] }}: {{ info['shortName'] }}</title>
 </head>
 <body>
@@ -19,23 +19,69 @@
     </ul>
   </header>
   
+<<<<<<< HEAD
+  <article class="ticker">
+    <header>
+      
+      <div class="company-logo"><img src="https://logo.clearbit.com/{{ domain }}?size=140"></div>
+      <h1 class="company-name">{{ info['longName'] }} <span class="symbol">{{ info['symbol'] }}</span></h1>
+      <p class="company-info">{{ info['industry'] }}</p>
+      <p class="company-link"><a href="{{ info['website'] }}">{{ info['website'] }}</a></p>
+    </header>
+
+    <p class="description">{{ info['longBusinessSummary'] }}</p>
+
+  </article>
+
+=======
+>>>>>>> main
   <main>
     <article class="ticker">
       <header>
         <div class="company-logo"><img src="https://logo.clearbit.com/{{ domain }}?size=140"></div>
+<<<<<<< HEAD
+        <h1 class="company-name">{{ info['longName'] }} <span class="symbol">{{ info['symbol'] }}@{{ info['exchange'] }}</span></h1>
+=======
         <h1 class="company-name">{{ info['longName'] }} <span class="symbol">{{ info['symbol'] }}</span></h1>
+>>>>>>> main
         <p class="company-info">{{ info['industry'] }}</p>
         <p class="company-link"><a href="{{ info['website'] }}">{{ info['website'] }}</a></p>
       </header>
 
+<<<<<<< HEAD
+      <p>
+        Current price: {{ info['currentPrice'] | currencyformat(info['currency']) }}
+        <br>Previous close: {{ info['previousClose'] | currencyformat(info['currency']) }}
+      </p>
+
+      <p>
+        Mean target price: {{ info['targetMeanPrice'] | currencyformat(info['currency']) }} 
+        <br>Median target price: {{ info['targetMedianPrice'] | currencyformat(info['currency']) }}
+      </p>
+      <p>{{ info['numberOfAnalystOpinions'] }} Analysts recommend: {{ info['recommendationKey'] }}</p>
+      <i class="icon arrow-right"></i>
+=======
+>>>>>>> main
       <p class="description">{{ info['longBusinessSummary'] }}</p>
     </article>
   
     <section id="news">
       <ul class="news-list">
+<<<<<<< HEAD
+      {% for news in ticker_news %}
+        <li>
+          <h3>
+            <a href="{{ news.link }}">{{ news.title }}</a>
+            <br>Sentiment: {{ news['sentiment']['label'] }}, {{ '{0:0.2f}'.format(news['sentiment']['score'] *100) }}%
+            
+            
+          </h3>
+          
+=======
       {% for news in ticker.news %}
         <li>
           <h3><a href="{{ news.link }}">{{ news.title }}</a></h3>
+>>>>>>> main
           {% if news.thumbnail and news.thumbnail.resolutions[1] %}
           <p><img src="{{ news.thumbnail.resolutions[1].url }}"></p>
           {% else %}
@@ -45,7 +91,43 @@
       {% endfor %}
       </ul>
     </section>
+<<<<<<< HEAD
+
+=======
+>>>>>>> main
   </main>
 
+<<<<<<< HEAD
+      .news-list li {
+        display: flex;
+        flex: 150px 1;
+        flex-direction: row-reverse;
+        gap: 10px;
+      }
+      .news-list li h3 {
+        flex: auto;
+        line-height:1.5;
+      }
+      .news-list li img {
+        width: 80px;
+      }
+      
+      
+      article {float:left; width: 1fr;}
+    </style>
+      
+      
+    
+    
+      
+      
+      
+<!--pre wrap>{{ info.keys() }}</pre-->
+  
+
+{{ info.keys() }}
+
+=======
+>>>>>>> main
 </body>
 </html>
