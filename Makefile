@@ -5,7 +5,7 @@ BIN    = $(VENV)/bin
 PYTHON = $(VENV)/bin/python3
 PIP    = $(VENV)/bin/pip3
 
-PYTHON_VERSION := 3.11.7
+PYTHON_VERSION := 3.10.13
 PYENV_VERSION_INSTALLED := $(shell pyenv versions --bare | grep -e "^$(PYTHON_VERSION)$$")
 
 log_success = (echo "\x1B[32m> $1\x1B[39m")
