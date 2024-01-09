@@ -31,3 +31,5 @@ plotly
 langchain
 openai
 langflow==0.6.4
+newspaper3k
+GoogleNews
