@@ -1,0 +1,136 @@
+body, h1,
+.breadcrumb,
+.ticker-list,
+.news-list {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui;
+
+}
+
+header.master {
+  background: #369;
+  color: #fff;
+  padding: 1rem 3rem;
+}
+
+main {
+  display: grid;
+  grid-template-columns: 3fr 4fr;
+  gap: 3rem;
+  padding: 3rem;
+}
+
+<<<<<<< HEAD
+.icon {
+  background-color: #369;
+  color: #fff;
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1;
+  border-radius: 100%;
+  display:inline-block;
+  padding: 0.1em;
+}
+.icon.arrow-right::before {
+  content: "→";
+}
+
+.breadcrumb {
+  list-style: none;
+}
+
+.breadcrumb .home {
+  font-size:1.2em;
+}
+.breadcrumb li {
+  display: inline-block;
+}
+.breadcrumb li:not(:last-child)::after {
+  content: ' » ';
+  color: #999;
+}
+.breadcrumb a {
+  color: #fff;
+  display: inline-block;
+  text-decoration:none;
+}
+
+
+
+h1 .symbol {
+  color: #999;
+  font-size: 0.75em;
+}
+
+.symbol {
+  font-family: monospace;
+}
+
+
+
+.ticker .company-logo {
+  width: 140px;
+  height: 140px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.ticker .company-logo img {
+  display: block;
+}
+
+.ticker .description {
+  font-size: 0.8rem;
+  line-height: 1.3;
+  text-align: justify;
+  hyphens: auto;
+}
+
+.ticker-list {
+  list-style: none;
+}
+.ticker-list li {
+  display: inline-block;
+  margin: 0.2rem;
+}
+
+
+.company-link {
+  font-size:0.75em;
+}
+
+
+.ticker header {
+  display: grid; 
+  grid-auto-columns: 1fr; 
+  grid-template-columns: 150px 1fr; 
+  grid-template-rows: 0.5fr 0.25fr 0.25fr; 
+  gap: 0px 10px; 
+  grid-template-areas: 
+    "logo company"
+    "logo info"
+    "logo more"; 
+}
+.ticker .company-logo { grid-area: logo;}
+.ticker .company-name { grid-area: company;}
+.ticker .company-info { grid-area: info;}
+.ticker .company-link { grid-area: more;}
+
+.news-list li {
+  display: flex;
+  flex: 150px 1;
+  flex-direction: row-reverse;
+  gap: 1rem;
+}
+.news-list li h3 {
+  flex: auto;
+  line-height:1.5;
+}
+.news-list li img {
+  width: 80px;
+}
+

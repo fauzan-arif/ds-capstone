@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="icon" sizes="32x32" href="https://www.google.com/s2/favicons?domain={{ domain }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='normalize.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='master.css') }}">
+  <meta name="theme-color" content="#336699">
+  
+  <title>Finance</title>
+</head>
+<body>
+  
+  <header class="master">
+    <ul class="breadcrumb">
+      <li><a href="/" class="home">⌂</a></li>
+    </ul>
+  </header>
+
+  <main>
+    <h1>S&amp;P 500 Companies</h1>
+    <ul class="ticker-list">
+      {% for ticker in tickers %}
+       <li><a href="{{ url_for('ticker', symbol=ticker) }}" class="symbol">{{ ticker }}</a></li>
+       {% endfor %}
+     </ul>
+  </main>
+
+</body>
+</html>
