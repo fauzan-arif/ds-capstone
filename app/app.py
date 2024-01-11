@@ -41,14 +41,13 @@ class Custom:
 def index():
     return render_template('index.html', tickers=TickerLists.all)
     
-#@app.route('/chatbot', methods=['POST'])
 @app.route('/chatbot')
 def chatbot():
 #    request_data = request.get_json()
 #    user_input   = request_data.get('data')
     return render_template('chatbot.html')
     
-@app.route("/chat", methods=["POST", "GET"])
+@app.route("/chat", methods=["POST"])
 def chat():
     user_input = request.json['messages'][0]['text']
     return jsonify({"text": agent.run(user_input) })
