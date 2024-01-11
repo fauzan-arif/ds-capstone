@@ -29,6 +29,7 @@ torch
 transformers
 ipywidgets
 plotly
+
 langchain==0.0.354
 langchain-community==0.0.11
 langchain-openai==0.0.2
@@ -38,3 +39,7 @@ newspaper3k
 GoogleNews
 duckduckgo-search
 arxiv
+datetime
+feedparser
+requests
+requests_html
