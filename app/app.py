@@ -11,16 +11,31 @@
 
 from flask import Flask, render_template, request, jsonify
 from flask_babel import Babel
-#from flask_cors import CORS
+from flask_cors import CORS
 from urllib.parse import urlparse
 import yfinance as yf
 
 app   = Flask(__name__)
 babel = Babel(app, default_locale='en')
-#CORS(app)
+CORS(app)
 
 from tools.ticker_tools import TickerLists
 from tools.news_classifier import NewsClassifier
+from tools.chatbot import *
+
+from flask import Response
+import time
+import json
+
+class Custom:
+    def chat(self, body):
+        # Text messages are stored inside request body using the Deep Chat JSON format:
+        # https://deepchat.dev/docs/connect
+        #print(body)
+        # Sends response back to Deep Chat using the Response format:
+        # https://deepchat.dev/docs/connect/#Response
+        return {"text": "This is a respone from a Flask server. Thankyou for your message!"}
+        
 
 @app.route('/')
 def index():
@@ -33,18 +48,11 @@ def chatbot():
 #    user_input   = request_data.get('data')
     return render_template('chatbot.html')
     
-@app.route("/chat", methods=["POST"])
+@app.route("/chat", methods=["POST", "GET"])
 def chat():
-    return custom.chat(request.json)
+    user_input = request.json['messages'][0]['text']
+    return jsonify({"text": agent.run(user_input) })
 
-# @app.route("/chat-stream", methods=["POST"])
-# def chat_stream():
-#     body = request.json
-#     return custom.chat_stream(body)
-#
-# @app.route("/files", methods=["POST"])
-# def files():
-#     return custom.files(request)
 
 
 @app.route('/<symbol>')

@@ -18,11 +18,27 @@
       <li class="symbol">Chatbot</li>
     </ul>
   </header>
+
+  
+  <!--deep-chat
+    stream='{"simulation": 6}'
+    introMessage='{"text": The response message bubble will be populated gradually with text events."}'
+    request='{
+      "url": "http://127.0.0.1:5000/chat",
+      "method": "POST",
+      "additionalBodyProps": {}
+    }'
+  ></deep-chat-->
+
+  
+  
+  
   
 <deep-chat
   request='{
-    "url": "/chat",
+    "url": "http://127.0.0.1:5000/chat",
     "method": "POST",
+    "additionalBodyProps": {}
   }'
   style="border-radius: 10px; width: 96vw; height: calc(100vh - 70px); padding-top: 10px"
   messageStyles='{
@@ -94,30 +110,24 @@
     {"text": "What is the meaning of life?", "role": "user"},
     {"text": "This completely depends on the person.", "role": "ai"} -->
   ]'
-  demo="false"
-  stream="true"
+  stream='{"simulation": 6}'
 ></deep-chat>
-  
+
   <!-- !!Either set the script as "module" or place your code in a timeout in order to wait for the component to load -->
    <script type="module">
-     const elementRef = document.getElementById("chat-element");
+     const el = document.getElementById("chat-element");
      // Setting value via a property (easiest way)
-     elementRef.initialMessages = [
+     el.initialMessages = [
 //       { role: "user", text: "Hey, how are you today?" },
 //       { role: "ai", text: "I am doing very well!" },
      ];
-     elementRef.setAttribute(
-       "introMessage",
-       JSON.stringify({
-         text: "JavaScript demo for the Deep Chat component.",
-       })
-     );
+     el.setAttribute("introMessage", JSON.stringify({ text: "JavaScript demo for the Deep Chat component." }));
    </script>
      
   <main>
     
     
-    
+    <!--
     <article class="chatbot">
       <header>
         <h2>🤖 Chatbot</h2>
@@ -133,6 +143,7 @@
       </div>
 
     </article>
+  -->
   
   </main>
   
