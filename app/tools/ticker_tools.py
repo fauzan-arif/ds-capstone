@@ -74,8 +74,8 @@ class TickerLists:
             "S&P 500":    self.sp500,
             "Dow Jones":  self.dow,
             "FTSE 100":   self.ftse100,
-            "Nifty 50":   self.nifty50,
+#            "Nifty 50":   self.nifty50,
             "DAX 40":     self.dax40,
-            "MDAX 50":    self.mdax50,
-            "SDAX 70":    self.sdax70,
+#            "MDAX 50":    self.mdax50,
+#            "SDAX 70":    self.sdax70,
         }
