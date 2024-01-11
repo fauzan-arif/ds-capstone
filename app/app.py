@@ -17,7 +17,7 @@ import yfinance as yf
 
 app   = Flask(__name__)
 babel = Babel(app, default_locale='en')
-CORS(app)
+#CORS(app)
 
 from tools.ticker_tools import TickerLists
 from tools.news_classifier import NewsClassifier
