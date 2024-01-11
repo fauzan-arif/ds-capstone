@@ -48,6 +48,47 @@ def get_stock_performance(symbol, days_ago=7):
     return round(((new_price - old_price) / old_price) * 100, 2)
 
 
+def calculate_SMA(ticker,window):
+  data = yf.Ticker(ticker).history(period='1y').Close
+  return str(data.rolling(window=window).mean().iloc[-1])
+
+def calculate_EMA(ticker,window):
+  data = yf.Ticker(ticker).history(period='1y').Close
+  return str(data.ewm(span=window,adjust=False).mean().iloc[-1])
+
+def calculate_RSI(ticker):
+  data = yf.Ticker(ticker).history(period='1y').Close
+  delta = data.diff()
+  up = delta.clip(lower=0)
+  down= -1 *delta.clip(upper=0)
+  ema_up=up.ewm(com=14-1, adjust= False).mean()
+  ema_down=down.ewm(com=14-1, adjust= False).mean()
+  rs = ema_up/ema_down
+  return str(100-(100/(1+rs)).iloc[-1])
+
+def calculate_MACD(ticker):
+  data = yf.Ticker(ticker).history(period='1y').Close
+  short_EMA=data.ewm(span=12,adjust=False).mean()
+  long_EMA=data.ewm(span=26,adjust=False).mean()
+  
+  MACD=short_EMA-long_EMA
+  signal =MACD.ewm(span=9,adjust=False).mean()
+  
+  MACD_histogram= MACD-signal
+  
+  return f'{MACD[-1]},{signal[-1]}, {MACD_histogram[-1]}'
+
+def plot_stock_price(ticker):
+  data = yf.Ticker(ticker).history(period='1y')
+  plt.figure(figsize=(10,5))
+  plt.plot(data.index,data.Close)
+  plt.title(f'{ticker} Stock Price Over Last Year')
+  plt.xlabel('Date')
+  plt.ylabel('Stock Price ($)')
+  plt.grid(True)
+  plt.savefig('stock.png')
+  plt.close()
+  
     
 search = DuckDuckGoSearchAPIWrapper()
 search_tool = Tool.from_function(
@@ -103,15 +144,15 @@ stock_daily_gainers = Tool.from_function(
     description="Useful for when you are need to find out the 100 best performing stocks for today",
 )
 
-currency_tool = Tool.from_function(
-    func=si.get_currencies,
-    name="Currency Lookup Tool",
-    description="Useful for when you are need to find currencies and conversion rates",
-)
+# currency_tool = Tool.from_function(
+#     func=si.get_currencies,
+#     name="Currency Lookup Tool",
+#     description="Useful for when you are need to find currencies and conversion rates",
+# )
 
 
 
-tools = [StockPriceTool(), stock_dividend_tool, stock_performance_tool, stock_daily_losers, stock_daily_gainers, currency_tool, search_tool]
+tools = [StockPriceTool(), stock_dividend_tool, stock_performance_tool, stock_daily_losers, stock_daily_gainers, search_tool]
 llm = ChatOpenAI(temperature=0, model="gpt-3.5-turbo-1106")
 agent_type = "structured-chat-zero-shot-react-description"
 agent = initialize_agent(

@@ -57,7 +57,10 @@ def chat():
 @app.route('/<symbol>')
 def ticker(symbol):
     ticker = yf.Ticker(symbol.upper())
-    domain = urlparse(ticker.info['website']).hostname if ticker.info['website'] else ''
+    if 'website' in ticker.info:
+        domain = urlparse(ticker.info['website']).hostname
+    else:
+        domain = ''
     ticker_news = news_with_sentiment(ticker.news)
     
     return render_template('ticker.html', ticker=ticker, info=ticker.info, domain=domain, ticker_news=ticker_news)
