@@ -20,12 +20,15 @@
   </header>
 
   <main>
-    <h1>S&amp;P 500 Companies</h1>
+    {% for group, symbols in tickers.items() %}
+    <h2>{{ group }}</h2>
     <ul class="ticker-list">
-      {% for ticker in tickers %}
+      {% for ticker in symbols %}
        <li><a href="{{ url_for('ticker', symbol=ticker) }}" class="symbol">{{ ticker }}</a></li>
-       {% endfor %}
+      {% endfor %}
      </ul>
+     {% endfor %}
+     
   </main>
 
 </body>

@@ -27,7 +27,8 @@
         <p class="company-info">{{ info['industry'] }}</p>
         <p class="company-link"><a href="{{ info['website'] }}">{{ info['website'] }}</a></p>
       </header>
-
+      <p>
+      </p>
       <p>
         Current price: {{ info['currentPrice'] | currencyformat(info['currency']) }}
         <br>Previous close: {{ info['previousClose'] | currencyformat(info['currency']) }}
