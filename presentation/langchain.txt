@@ -1,0 +1,14 @@
+LangChain enables modular and flexible AI architectures which provides unique advantages:
+
+- Model I/O: Interface for communication with language models.
+
+- Data Connection: Interface with application-specific data.
+
+- Chains: Sequences of calls that represent tasks.
+
+- Agents: Let chains decide which tools to use.
+
+- Memory: Maintains application state between chain runs.
+
+- Callbacks: Logs and streams intermediate steps of chains.
+
