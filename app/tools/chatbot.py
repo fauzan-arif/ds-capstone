@@ -15,8 +15,50 @@ from typing import Optional
 
 
 # TOOLS #################################################################
-from datetime import datetime, timedelta
 import yfinance as yf
+from datetime import datetime, timedelta
+from langchain_experimental.tools import PythonREPLTool
+
+class StockInfoSchema(BaseModel):
+    """Input for Stock information."""
+    symbol: str = Field(..., description="Ticker symbol for stock or index")
+    key: Optional[str] = Field(default="currentPrice", description="Which information to look for. Default is the current price.")
+
+class StockInfoTool(BaseTool):
+    args_schema = StockInfoSchema
+    name = "Stock Information Tool"
+    description = """Useful for when you need to find out the information about a specific stock. 
+        These Keys are available: address1, city, state, zip, country, phone, website, industry, 
+        industryKey, industryDisp, sector, sectorKey, sectorDisp, longBusinessSummary, 
+        fullTimeEmployees, companyOfficers, auditRisk, boardRisk, compensationRisk, 
+        shareHolderRightsRisk, overallRisk, governanceEpochDate, compensationAsOfEpochDate,
+        maxAge, priceHint, previousClose, open, dayLow, dayHigh, regularMarketPreviousClose, 
+        regularMarketOpen, regularMarketDayLow, regularMarketDayHigh, dividendRate, dividendYield, 
+        exDividendDate, payoutRatio, fiveYearAvgDividendYield, beta, trailingPE, forwardPE, volume, 
+        regularMarketVolume, averageVolume, averageVolume10days, averageDailyVolume10Day, bid, ask,
+        bidSize, askSize, marketCap, fiftyTwoWeekLow, fiftyTwoWeekHigh, priceToSalesTrailing12Months,
+        fiftyDayAverage, twoHundredDayAverage, trailingAnnualDividendRate, trailingAnnualDividendYield, 
+        currency, enterpriseValue, profitMargins, floatShares, sharesOutstanding, sharesShort, 
+        sharesShortPriorMonth, sharesShortPreviousMonthDate, dateShortInterest, sharesPercentSharesOut, 
+        heldPercentInsiders, heldPercentInstitutions, shortRatio, shortPercentOfFloat, 
+        impliedSharesOutstanding, bookValue, priceToBook, lastFiscalYearEnd, nextFiscalYearEnd, 
+        mostRecentQuarter, earningsQuarterlyGrowth, netIncomeToCommon, trailingEps, forwardEps, pegRatio, 
+        lastSplitFactor, lastSplitDate, enterpriseToRevenue, enterpriseToEbitda, 52WeekChange, 
+        SandP52WeekChange, lastDividendValue, lastDividendDate, exchange, quoteType, symbol, 
+        underlyingSymbol, shortName, longName, firstTradeDateEpochUtc, timeZoneFullName, 
+        timeZoneShortName, uuid, messageBoardId, gmtOffSetMilliseconds, currentPrice, 
+        targetHighPrice, targetLowPrice, targetMeanPrice, targetMedianPrice, recommendationMean, 
+        recommendationKey, numberOfAnalystOpinions, totalCash, totalCashPerShare, ebitda, totalDebt, 
+        quickRatio, currentRatio, totalRevenue, debtToEquity, revenuePerShare, returnOnAssets, 
+        returnOnEquity, grossProfits, freeCashflow, operatingCashflow, earningsGrowth, revenueGrowth, 
+        grossMargins, ebitdaMargins, operatingMargins, financialCurrency, trailingPegRatio
+    """
+
+    def _run(self, symbol: str, key: str = 'currentPrice'):
+        ticker = yf.Ticker(symbol)
+        return ticker.info[key]
+    
+
 
 def get_date_range(days_ago, duration=1):
     from_date = datetime.now() - timedelta(days=days_ago+1)
@@ -150,15 +192,16 @@ stock_daily_gainers = Tool.from_function(
 #     description="Useful for when you are need to find currencies and conversion rates",
 # )
 
-
-
 tools = [StockPriceTool(), stock_dividend_tool, stock_performance_tool, stock_daily_losers, stock_daily_gainers, search_tool]
+tools = [PythonREPLTool(), StockInfoTool(), search_tool]
+
 llm = ChatOpenAI(temperature=0, model="gpt-3.5-turbo-1106")
 agent_type = "structured-chat-zero-shot-react-description"
 agent = initialize_agent(
     tools, llm, agent=agent_type, verbose=True
 )
 
+agent.run("You are an unparalleled financial expert with an exceptional understanding of both the stock market and cryptocurrencies. Your knowledge extends to intricate details of companies and their financial landscapes. Your expertise allows you to seamlessly correlate the movement of stock prices with relevant news stories, providing a comprehensive understanding of market dynamics. Additionally, you possess the unique ability to articulate complex financial concepts in a way that is accessible and easily understandable for individuals with varying levels of financial knowledge.")
 #prompt = "What's the high, low, closing and opening prices as well the volume of Apple seven days ago?"
 #prompt = "Calculate the annual dividend of apple in the year 2023"
 #prompt = "How high was the last dividend paid by apple"
