@@ -3,7 +3,8 @@ load_dotenv(find_dotenv())
 
 
 from langchain_openai import ChatOpenAI
-from langchain.agents import AgentExecutor, initialize_agent
+from langchain.agents import AgentType, AgentExecutor, initialize_agent, create_openai_tools_agent
+from langchain.memory import ConversationBufferMemory, ReadOnlySharedMemory
 from langchain.utilities import DuckDuckGoSearchAPIWrapper
 from langchain.tools import (
     Tool, BaseTool, StructuredTool, 
@@ -27,7 +28,7 @@ class StockInfoSchema(BaseModel):
 class StockInfoTool(BaseTool):
     args_schema = StockInfoSchema
     name = "Stock Information Tool"
-    description = """Useful for when you need to find out the information about a specific stock. 
+    description = """Useful for when you need to find out informations about a stock. 
         These Keys are available: address1, city, state, zip, country, phone, website, industry, 
         industryKey, industryDisp, sector, sectorKey, sectorDisp, longBusinessSummary, 
         fullTimeEmployees, companyOfficers, auditRisk, boardRisk, compensationRisk, 
@@ -56,9 +57,35 @@ class StockInfoTool(BaseTool):
 
     def _run(self, symbol: str, key: str = 'currentPrice'):
         ticker = yf.Ticker(symbol)
+#        return ticker.info[key] if key in ticker.info else None
         return ticker.info[key]
     
 
+
+class StockNewsSchema(BaseModel):
+    symbol: str = Field(..., description="Ticker symbol for stock.")
+
+class StockNewsTool(BaseTool):
+    args_schema = StockNewsSchema
+    name = "Stock News Tool"
+    description = "Useful for when you need to find news about a company or stock"
+    def _run(self, symbol: str):
+        ticker = yf.Ticker(symbol)
+        return ticker.news
+
+from tools.news_classifier import NewsClassifier
+
+class StockNewsSentimentSchema(BaseModel):
+    text: str = Field(..., description="News text or headline to analyse")
+
+class StockNewsSentimentTool(BaseTool):
+    args_schema = StockNewsSentimentSchema
+    name = "Financial News Sentiment Tool"
+    description = "Useful for when you need to get a financial sentiment for a news headlines."
+    def _run(self, text: str):
+        return NewsClassifier().sentiment_for(text)
+
+    
 
 def get_date_range(days_ago, duration=1):
     from_date = datetime.now() - timedelta(days=days_ago+1)
@@ -142,7 +169,7 @@ search_tool = Tool.from_function(
 class StockPriceSchema(BaseModel):
     """Input for Stock price check."""
     symbol:     str = Field(..., description="Ticker symbol for stock or index")
-    days_ago:   Optional[int] = Field(default=0, description="Number of days ago to check the stock price for")
+    start_date: str = Field(..., description="The exact in the past")
     price_type: Optional[str] = Field(default="Close", description="Which price to look for (Open, High, Low, Close, Volume)")
 
 class StockPriceTool(BaseTool):
@@ -150,8 +177,29 @@ class StockPriceTool(BaseTool):
     description = "Useful for when you need to find out the price of stock. You should input the stock ticker used on the yfinance API"
     args_schema = StockPriceSchema
 
-    def _run(self, symbol: str, days_ago: Optional[int] = 0, price_type='Close'):
-        return get_stock_price(symbol, days_ago, price_type)
+    def _run(self, symbol: str, start_date: str, price_type='Close'):
+        start_date = datetime.strptime(start_date, '%Y-%m-%d')
+        end_date = start_date + timedelta(days=1)
+        data = yf.Ticker(symbol).history(
+            start=start_date.strftime('%Y-%m-%d'),
+            end=end_date.strftime('%Y-%m-%d')
+        )
+        return round(data.iloc[0][price_type], 2) if not data.empty else "No data available for this date."
+
+
+# class StockPriceSchema(BaseModel):
+#     """Input for Stock price check."""
+#     symbol:     str = Field(..., description="Ticker symbol for stock or index")
+#     days_ago:   Optional[int] = Field(default=0, description="Number of days ago to check the stock price for")
+#     price_type: Optional[str] = Field(default="Close", description="Which price to look for (Open, High, Low, Close, Volume)")
+#
+# class StockPriceTool(BaseTool):
+#     name = "yFinance Stock Ticker Tool"
+#     description = "Useful for when you need to find out the price of stock. You should input the stock ticker used on the yfinance API"
+#     args_schema = StockPriceSchema
+#
+#     def _run(self, symbol: str, days_ago: Optional[int] = 0, price_type='Close'):
+#         return get_stock_price(symbol, days_ago, price_type)
 
 stock_tool = StructuredTool.from_function(
     func=get_stock_price,
@@ -159,6 +207,8 @@ stock_tool = StructuredTool.from_function(
     description="Useful for when you are need to find a stock price",
     args_schema=StockPriceSchema,
 )
+
+
 
 stock_dividend_tool = Tool.from_function(
     func=get_dividends,
@@ -186,22 +236,32 @@ stock_daily_gainers = Tool.from_function(
     description="Useful for when you are need to find out the 100 best performing stocks for today",
 )
 
-# currency_tool = Tool.from_function(
-#     func=si.get_currencies,
-#     name="Currency Lookup Tool",
-#     description="Useful for when you are need to find currencies and conversion rates",
-# )
-
-tools = [StockPriceTool(), stock_dividend_tool, stock_performance_tool, stock_daily_losers, stock_daily_gainers, search_tool]
-tools = [PythonREPLTool(), StockInfoTool(), search_tool]
-
-llm = ChatOpenAI(temperature=0, model="gpt-3.5-turbo-1106")
-agent_type = "structured-chat-zero-shot-react-description"
-agent = initialize_agent(
-    tools, llm, agent=agent_type, verbose=True
+from datetime import datetime
+date_tool = Tool.from_function(
+    func=lambda x: datetime.now().strftime("%A, %B %d, %Y"),
+    name="Current Date",
+    description="Useful for when you are need to find the current date and/or time",
 )
 
-agent.run("You are an unparalleled financial expert with an exceptional understanding of both the stock market and cryptocurrencies. Your knowledge extends to intricate details of companies and their financial landscapes. Your expertise allows you to seamlessly correlate the movement of stock prices with relevant news stories, providing a comprehensive understanding of market dynamics. Additionally, you possess the unique ability to articulate complex financial concepts in a way that is accessible and easily understandable for individuals with varying levels of financial knowledge.")
+
+#tools = [StockPriceTool(), stock_dividend_tool, stock_performance_tool, stock_daily_losers, stock_daily_gainers, search_tool]
+
+tools = [PythonREPLTool(), StockInfoTool(), StockNewsTool(), StockNewsSentimentTool(), StockPriceTool(), stock_dividend_tool, search_tool, date_tool]
+
+memory = ConversationBufferMemory(memory_key="chat_history")
+readonlymemory = ReadOnlySharedMemory(memory=memory)
+
+llm = ChatOpenAI(temperature=0, model="gpt-3.5-turbo-1106", streaming=True)
+
+agent_type = "structured-chat-zero-shot-react-description"
+
+agent = initialize_agent(
+    tools=tools, llm=llm, agent=agent_type, verbose=True, memory=readonlymemory
+)
+
+#agent_executor = AgentExecutor(agent=agent, tools=tools)
+
+# agent.run("You are an unparalleled financial expert with an exceptional understanding of both the stock market and cryptocurrencies. Your knowledge extends to intricate details of companies and their financial landscapes. Your expertise allows you to seamlessly correlate the movement of stock prices with relevant news stories, providing a comprehensive understanding of market dynamics. Additionally, you possess the unique ability to articulate complex financial concepts in a way that is accessible and easily understandable for individuals with varying levels of financial knowledge.")
 #prompt = "What's the high, low, closing and opening prices as well the volume of Apple seven days ago?"
 #prompt = "Calculate the annual dividend of apple in the year 2023"
 #prompt = "How high was the last dividend paid by apple"
