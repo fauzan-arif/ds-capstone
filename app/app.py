@@ -15,6 +15,31 @@ def index():
     return render_template('index.html', tickers=tickers)
     
 
+@app.route('/chatbot')
+def chatbot():
+#    request_data = request.get_json()
+#    user_input   = request_data.get('data')
+    return render_template('chatbot.html')
+    
+@app.route("/chat", methods=["POST"])
+def chat():
+    user_input = request.json['messages'][0]['text']
+    response = agent({"input": user_input})
+    return jsonify({"text": response })
+#    for chunk in response:
+#        yield chunk
+#    return jsonify(response)
+#    return dumps(response["intermediate_steps"], pretty=True)
+#    partial_message = ""
+#    for chunk in response:
+#        partial_message = partial_message + chunk.dict()['content']
+#        yield partial_message   
+
+
+
+
+
+
 @app.route('/<symbol>')
 def ticker(symbol):
     ticker = yf.Ticker(symbol.upper())
