@@ -43,14 +43,13 @@ def index():
     
 @app.route('/chatbot')
 def chatbot():
-#    request_data = request.get_json()
-#    user_input   = request_data.get('data')
     return render_template('chatbot.html')
     
 @app.route("/chat", methods=["POST"])
 def chat():
     user_input = request.json['messages'][0]['text']
-    return jsonify({"text": agent.run(user_input) })
+    response   = agent(user_input)
+    return jsonify({"text": response })
 
 
 
@@ -73,12 +72,3 @@ def news_with_sentiment(news):
 
     return news
 
-
-
-
-# import yfinance as yf
-# company = yf.Ticker('AAPL')
-
-# print(company.cashflow)
-# print(company.balance_sheet.to_string())
-# print(company.income_stmt)
