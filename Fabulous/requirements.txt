@@ -1,0 +1,24 @@
+#Data collec
+yfinance
+#sqlite
+#data anlaysis stack
+datetime
+numpy
+pandas
+statsmodels
+#Visualiz stack
+matplotlib
+seaborn
+plotly
+#ML Stack
+scikit-learn
+tensorflow
+keras
+xgboost
+pandas_ta
+ta
+TA-Lib
+#App Stack
+streamlit
+streamlit-aggrid
+streamlit-autorefresh
