@@ -11,6 +11,7 @@ matplotlib
 seaborn
 plotly
 #ML Stack
+transformers
 scikit-learn
 tensorflow
 keras
@@ -21,4 +22,6 @@ TA-Lib
 #App Stack
 streamlit
 streamlit-aggrid
+pyfinviz
+pytorch
 streamlit-autorefresh
